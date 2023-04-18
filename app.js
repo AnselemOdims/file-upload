@@ -4,6 +4,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const xss = require('xss-clean')
 const path = require('path')
+const fileUpload = require('express-fileupload')
 
 require('dotenv').config();
 require('express-async-errors')
@@ -18,9 +19,11 @@ app.use(xss())
 
 app.use(express.json());
 
+app.use(express.static(__dirname, path.join('__dirname', '/public')))
 app.use('/api/v1/products', productRouter)
 
 app.use(errorHandler)
+app.use(fileUpload())
 
 const connectDB = async() => {
     await mongoose.connect(process.env.MONGO_URL)

@@ -1,11 +1,10 @@
 const express = require('express')
+const { createProduct, getAllProducts } = require('../controllers/productController')
+const { uploadProductImage } = require('../controllers/uploadsController')
 
 const router = express.Router();
 
-router.route('/').get((req, res) => {
-    res.status(200).json({
-        msg: "Welcome to File Upload"
-    })
-})
+router.route('/').post(createProduct).get(getAllProducts)
+router.route('/uploads').post(uploadProductImage)
 
 module.exports = router
