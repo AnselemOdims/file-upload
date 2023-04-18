@@ -1,5 +1,5 @@
 const Product = require('../model/Product');
-const { StatusCodes } = require('express-async-errors')
+const { StatusCodes } = require('http-status-codes')
 
 const createProduct = async (req, res) => {
     const { body } = req
@@ -11,8 +11,13 @@ const createProduct = async (req, res) => {
     })
 }
 
-const getAllProducts =(req, res) => {
-    res.send("Get All Products")
+const getAllProducts = async (req, res) => {
+    const products = await Product.find({});
+    res.status(StatusCodes.OK).json({
+        code: '00',
+        msg: 'All products retrieved successfully',
+        products
+    })
 }
 
 module.exports = {
