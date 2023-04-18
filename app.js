@@ -9,6 +9,7 @@ require('dotenv').config();
 require('express-async-errors')
 
 const productRouter = require('./routes/productRoute')
+const errorHandler = require('./middleware/errorHandler')
 const app = express()
 
 app.use(cors())
@@ -18,6 +19,8 @@ app.use(xss())
 app.use(express.json());
 
 app.use('/api/v1/products', productRouter)
+
+app.use(errorHandler)
 
 const connectDB = async() => {
     await mongoose.connect(process.env.MONGO_URL)
